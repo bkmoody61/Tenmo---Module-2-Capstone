@@ -8,6 +8,7 @@ namespace TenmoClient.Views
 {
     public class MainMenu : ConsoleMenu
     {
+        private static AuthService user = new AuthService();
 
         public MainMenu()
         { 
@@ -28,7 +29,8 @@ namespace TenmoClient.Views
         private MenuOptionResult ViewBalance()
         {
             //TODO
-            Console.WriteLine("placeholder");
+            
+            Console.WriteLine($"{user.GetUserAccountBalance(UserService.GetUserId()).Balance}");
             return MenuOptionResult.WaitAfterMenuSelection;
         }
 

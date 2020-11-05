@@ -39,6 +39,14 @@ namespace TenmoClient
                 return true;
             }
         }
+        public API_Accounts GetUserAccountBalance(int userId)
+        {
+            RestRequest request = new RestRequest($"{API_BASE_URL}accounts/{userId}");
+            client.Authenticator = new JwtAuthenticator(UserService.GetToken());
+            IRestResponse<API_Accounts> response = client.Get<API_Accounts>(request);
+
+            return response.Data;
+        }
 
         public API_User Login(LoginUser loginUser)
         {

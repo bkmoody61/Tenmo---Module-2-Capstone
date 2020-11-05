@@ -21,11 +21,12 @@ namespace TenmoServer.Controllers
             this.accountsDAO = accountsDAO;
         }
 
-        [HttpGet("{account_id}")]
-        [Authorize]
-        public Accounts ReturnAccount(int accountid)
+        [HttpGet("/accounts/{userid}")]
+        //[Authorize]
+        public IActionResult ReturnAccount(int userid)
         {
-            return accountsDAO.GetAccounts(accountid);
+            Accounts accounts = accountsDAO.GetAccounts(userid);
+            return Ok(accounts);
         }
     }
 }
