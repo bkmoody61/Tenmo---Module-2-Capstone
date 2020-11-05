@@ -18,7 +18,6 @@ namespace TenmoServer.DAO
         public Accounts GetAccounts(int userid)
         {
             Accounts account = new Accounts();
-            //User returnUser = null;
 
             try
             {
