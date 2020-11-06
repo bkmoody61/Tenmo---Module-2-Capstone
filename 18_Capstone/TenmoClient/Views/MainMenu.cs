@@ -8,7 +8,7 @@ namespace TenmoClient.Views
 {
     public class MainMenu : ConsoleMenu
     {
-        private static AuthService user = new AuthService();
+        private static APIService user = new APIService();
 
         public MainMenu()
         { 
@@ -30,7 +30,7 @@ namespace TenmoClient.Views
         {
             //TODO
             
-            Console.WriteLine($"{user.GetUserAccountBalance(UserService.GetUserId()).Balance}");
+            Console.WriteLine($"Your current balance is: {user.GetUserAccountBalance(UserService.GetUserId()).Balance:C}");
             return MenuOptionResult.WaitAfterMenuSelection;
         }
 

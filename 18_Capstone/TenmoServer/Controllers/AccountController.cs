@@ -12,21 +12,25 @@ namespace TenmoServer.Controllers
     [Route("[controller]")]
     [ApiController]
     [Authorize]
-    public class AccountsController : Controller
+    public class AccountController : Controller
     {
-        private IAccountsDAO accountsDAO;
+        private IAccountDAO accountDAO;
 
-        public AccountsController(IAccountsDAO accountsDAO)
+        public AccountController(IAccountDAO accountDAO)
         {
-            this.accountsDAO = accountsDAO;
+            this.accountDAO = accountDAO;
         }
 
         [HttpGet("/accounts/{userid}")]
         //[Authorize]
+  
         public IActionResult ReturnAccount(int userid)
         {
-            Accounts accounts = accountsDAO.GetAccounts(userid);
+            Account accounts = accountDAO.GetAccounts(userid);
             return Ok(accounts);
         }
+
+     
+
     }
 }

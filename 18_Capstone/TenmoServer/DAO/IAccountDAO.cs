@@ -6,8 +6,8 @@ using TenmoServer.Models;
 
 namespace TenmoServer.DAO
 {
-    public interface IAccountsDAO
+    public interface IAccountDAO
     {
-        Accounts GetAccounts(int accountid);
+        Account GetAccounts(int accountid);
     }
 }

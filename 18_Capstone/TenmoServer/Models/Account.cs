@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace TenmoServer.Models
 {
-    public class Accounts
+    public class Account
     {
         public int AccountID { get; set;  }
         public int UserID { get; set; }
         public decimal Balance { get; set; }
 
-        //public Accounts(); constructor?
     }
 }

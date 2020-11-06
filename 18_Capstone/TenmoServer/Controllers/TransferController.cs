@@ -14,20 +14,20 @@ namespace TenmoServer.Controllers
     [ApiController]
     public class TransferController : ControllerBase
     {
-        private IAccountsDAO accountsDAO;
+        private IAccountDAO accountDAO;
         private ITransferDAO transferDAO;
 
-        public TransferController(IAccountsDAO accountsDAO, ITransferDAO transferDAO)
+        public TransferController(IAccountDAO accountDAO, ITransferDAO transferDAO)
         {
-            this.accountsDAO = accountsDAO;
+            this.accountDAO = accountDAO;
             this.transferDAO = transferDAO;
         }
 
         [HttpPost("sendMoney")]
-        public IActionResult SendMoney(Transfers transfer)
+        public IActionResult SendMoney(Transfer transfer)
         {
             int userid = GetUserId();
-            Accounts account = accountsDAO.GetAccounts(userid);
+            Account account = accountDAO.GetAccounts(userid);
             if(account.Balance < transfer.Amount)
             {
                 return BadRequest("You do not have enough money.");

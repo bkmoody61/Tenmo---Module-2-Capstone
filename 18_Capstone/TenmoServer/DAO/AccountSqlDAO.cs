@@ -7,17 +7,17 @@ using TenmoServer.Models;
 
 namespace TenmoServer.DAO
 {
-    public class AccountsSqlDAO : IAccountsDAO
+    public class AccountSqlDAO : IAccountDAO
     {
         private readonly string connectionString;
-        public AccountsSqlDAO(string connectionString)
+        public AccountSqlDAO(string connectionString)
         {
             this.connectionString = connectionString;
         }
 
-        public Accounts GetAccounts(int userid)
+        public Account GetAccounts(int userid)
         {
-            Accounts account = new Accounts();
+            Account account = new Account();
 
             try
             {
