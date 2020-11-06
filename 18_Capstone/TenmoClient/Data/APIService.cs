@@ -19,5 +19,37 @@ namespace TenmoClient.Data
 
             return response.Data;
         }
+
+        public List<User> GetAllUsers()
+        {
+            RestRequest request = new RestRequest($"{API_BASE_URL}user");
+            client.Authenticator = new JwtAuthenticator(UserService.GetToken());
+            IRestResponse<List<User>> response = client.Get<List<User>>(request);
+
+            return response.Data;
+        }
+
+        public Transfer AddTransfer(Transfer newTransfer)
+        {
+            RestRequest request = new RestRequest($"{API_BASE_URL}transfer");
+            client.Authenticator = new JwtAuthenticator(UserService.GetToken());
+            request.AddJsonBody(newTransfer);
+            IRestResponse<Transfer> response = client.Post<Transfer>(request);
+
+            if (response.ResponseStatus != ResponseStatus.Completed || !response.IsSuccessful)
+            {
+                ProcessErrorResponse(response);
+            }
+            else
+            {
+                return response.Data;
+            }
+            return null;
+        }
+
+        private void ProcessErrorResponse(IRestResponse<Transfer> response)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

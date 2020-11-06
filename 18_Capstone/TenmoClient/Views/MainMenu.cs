@@ -48,8 +48,29 @@ namespace TenmoClient.Views
 
         private MenuOptionResult SendTEBucks()
         {
-            Console.WriteLine("Not yet implemented!");
+            Console.WriteLine("--------------------------------------------------");
+            Console.WriteLine("Users Id     Name");
+            Console.WriteLine("--------------------------------------------------");
+            List<User> userList = user.GetAllUsers();
+            foreach (User user in userList)
+            {
+                Console.WriteLine($"{user.UserId}      {user.Username}");
+            }
+            Console.WriteLine("---------------------------------------------------");
+            Console.Write("Select Recipient ID (0 to cancel)");
+            int recipientId = int.Parse(Console.ReadLine());
+            Console.Write("Enter Amount");
+            decimal transferAmount = decimal.Parse(Console.ReadLine());
+            Transfer newTransfer = new Transfer();
+            newTransfer.TransferTypeID = TransferType.Send;
+            newTransfer.TransferStatusID = TransferStatus.Approved;
+            //newTransfer.AccountFrom = UserService.GetUserId(); WE DONT NEED THIS
+            newTransfer.AccountTo = recipientId;
+            newTransfer.Amount = transferAmount;
+            user.AddTransfer(newTransfer);
+
             return MenuOptionResult.WaitAfterMenuSelection;
+
         }
 
         private MenuOptionResult RequestTEBucks()
