@@ -57,14 +57,13 @@ namespace TenmoClient.Views
                 Console.WriteLine($"{user.UserId}      {user.Username}");
             }
             Console.WriteLine("---------------------------------------------------");
-            Console.Write("Select Recipient ID (0 to cancel)");
+            Console.Write("Select Recipient ID (0 to cancel): ");
             int recipientId = int.Parse(Console.ReadLine());
-            Console.Write("Enter Amount");
+            Console.Write("Enter Amount: ");
             decimal transferAmount = decimal.Parse(Console.ReadLine());
             Transfer newTransfer = new Transfer();
             newTransfer.TransferTypeID = TransferType.Send;
             newTransfer.TransferStatusID = TransferStatus.Approved;
-            //newTransfer.AccountFrom = UserService.GetUserId(); WE DONT NEED THIS
             newTransfer.AccountTo = recipientId;
             newTransfer.Amount = transferAmount;
             user.AddTransfer(newTransfer);

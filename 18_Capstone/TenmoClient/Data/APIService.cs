@@ -31,7 +31,7 @@ namespace TenmoClient.Data
 
         public Transfer AddTransfer(Transfer newTransfer)
         {
-            RestRequest request = new RestRequest($"{API_BASE_URL}transfer");
+            RestRequest request = new RestRequest($"{API_BASE_URL}transfer/sendMoney");
             client.Authenticator = new JwtAuthenticator(UserService.GetToken());
             request.AddJsonBody(newTransfer);
             IRestResponse<Transfer> response = client.Post<Transfer>(request);
