@@ -10,6 +10,7 @@ namespace TenmoClient.Views
     {
         private static APIService user = new APIService();
 
+
         public MainMenu()
         { 
             AddOption("View your current balance", ViewBalance)
@@ -36,7 +37,16 @@ namespace TenmoClient.Views
 
         private MenuOptionResult ViewTransfers()
         {
-            Console.WriteLine("Not yet implemented!");
+            Console.WriteLine("--------------------------------------------------");
+            Console.WriteLine("Transfer Id     From         To            Amount");
+            Console.WriteLine("--------------------------------------------------");
+            List<Transfer> transferList = user.ViewTransfers(UserService.GetUserId());
+            foreach (Transfer transfer in transferList)
+            {
+                Console.WriteLine($"{transfer.TransferID}    {transfer.AccountFromName} {transfer.AccountToName} {transfer.Amount}");
+            }
+
+            Console.WriteLine("Please hit enter to return to main menu");
             return MenuOptionResult.WaitAfterMenuSelection;
         }
 

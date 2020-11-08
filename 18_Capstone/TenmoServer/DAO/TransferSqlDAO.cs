@@ -54,35 +54,45 @@ Commit Transaction;";
         }
         public List<Transfer> ViewTransfer(int userId)
         {
-            Transfer viewTransfer = new Transfer();
             List<Transfer> viewTransferList = new List<Transfer>();
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
+
                     conn.Open();
                     string sql =
-@"select transfer_id, ufrom.username, uto.username , amount
+@"select transfer_id, ufrom.username as fromusername, uto.username as tousername, amount
 from transfers t
 join accounts afrom on t.account_from = afrom.user_id
 join accounts ato on t.account_to = ato.account_id
 join users ufrom on afrom.user_id = ufrom.user_id
 join users uto on ato.user_id = uto.user_id
-where account_from = (select account_id from accounts where user_id = @userId)";
+where t.account_from = (select account_id from accounts where user_id = @userId)
+or t.account_to = (select account_id from accounts where user_id = @userId)";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@userId", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
-
-                    if (reader.Read())
+                    if (reader.HasRows)
                     {
-                        viewTransfer.TransferID = Convert.ToInt32(reader["transfer_id"]);
-                        viewTransfer.AccountFromName = Convert.ToString(reader["ufrom.username"]);
-                        viewTransfer.AccountToName = Convert.ToString(reader["uto.username"]);
-                        viewTransfer.Amount = Convert.ToDecimal(reader["amount"]);
-                        viewTransferList.Add(viewTransfer);
+
+
+
+                        while (reader.Read())
+                        {
+                            Transfer viewTransfer = new Transfer();
+
+                            viewTransfer.TransferID = Convert.ToInt32(reader["transfer_id"]);
+                            viewTransfer.AccountFromName = Convert.ToString(reader["fromusername"]);
+                            viewTransfer.AccountToName = Convert.ToString(reader["tousername"]);
+                            viewTransfer.Amount = Convert.ToDecimal(reader["amount"]);
+
+                            viewTransferList.Add(viewTransfer);
+
+                        }
                     }
-                    return viewTransferList;
+                        return viewTransferList;
                 }
             }
             catch (SqlException)

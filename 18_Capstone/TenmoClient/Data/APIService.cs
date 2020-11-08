@@ -51,5 +51,14 @@ namespace TenmoClient.Data
         {
             throw new NotImplementedException();
         }
+        public List<Transfer> ViewTransfers(int userId)
+        {
+            RestRequest request = new RestRequest($"{API_BASE_URL}transfer/{userId}");
+            client.Authenticator = new JwtAuthenticator(UserService.GetToken());
+            IRestResponse<List<Transfer>> response = client.Get<List<Transfer>>(request);
+
+            return response.Data;
+        }
+
     }
 }
