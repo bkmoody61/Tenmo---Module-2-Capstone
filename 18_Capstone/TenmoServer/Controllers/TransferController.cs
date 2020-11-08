@@ -26,8 +26,8 @@ namespace TenmoServer.Controllers
         [HttpPost("sendMoney")]
         public IActionResult SendMoney(Transfer transfer)
         {
-            int userid = GetUserId();
-            Account account = accountDAO.GetAccounts(userid);
+            int userId = GetUserId();
+            Account account = accountDAO.GetAccounts(userId);
             if(account.Balance < transfer.Amount)
             {
                 return BadRequest("You do not have enough money.");
@@ -37,6 +37,14 @@ namespace TenmoServer.Controllers
             return Ok();
 
         }
+        [HttpGet("/{userId}")]
+        public List<Transfer> ViewTransfer(int userId)
+        {
+            return transferDAO.ViewTransfer(userId);
+        }
+
+
+
         private int GetUserId()
         {
             string strUserId = User.Claims.FirstOrDefault(claim => claim.Type == "sub")?.Value;

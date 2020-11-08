@@ -52,6 +52,44 @@ Commit Transaction;";
 
 
         }
+        public List<Transfer> ViewTransfer(int userId)
+        {
+            Transfer viewTransfer = new Transfer();
+            List<Transfer> viewTransferList = new List<Transfer>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string sql =
+@"select transfer_id, ufrom.username, uto.username , amount
+from transfers t
+join accounts afrom on t.account_from = afrom.user_id
+join accounts ato on t.account_to = ato.account_id
+join users ufrom on afrom.user_id = ufrom.user_id
+join users uto on ato.user_id = uto.user_id
+where account_from = (select account_id from accounts where user_id = @userId)";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        viewTransfer.TransferID = Convert.ToInt32(reader["transfer_id"]);
+                        viewTransfer.AccountFromName = Convert.ToString(reader["ufrom.username"]);
+                        viewTransfer.AccountToName = Convert.ToString(reader["uto.username"]);
+                        viewTransfer.Amount = Convert.ToDecimal(reader["amount"]);
+                        viewTransferList.Add(viewTransfer);
+                    }
+                    return viewTransferList;
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
     }
 }
 

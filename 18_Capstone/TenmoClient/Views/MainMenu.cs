@@ -59,17 +59,26 @@ namespace TenmoClient.Views
             Console.WriteLine("---------------------------------------------------");
             Console.Write("Select Recipient ID (0 to cancel): ");
             int recipientId = int.Parse(Console.ReadLine());
-            Console.Write("Enter Amount: ");
-            decimal transferAmount = decimal.Parse(Console.ReadLine());
-            Transfer newTransfer = new Transfer();
-            newTransfer.TransferTypeID = TransferType.Send;
-            newTransfer.TransferStatusID = TransferStatus.Approved;
-            newTransfer.AccountTo = recipientId;
-            newTransfer.Amount = transferAmount;
-            user.AddTransfer(newTransfer);
+            if (recipientId == 0)
+            {
+                Console.WriteLine("Please hit enter to return to main menu");
+                return MenuOptionResult.WaitAfterMenuSelection;
 
-            return MenuOptionResult.WaitAfterMenuSelection;
-
+            }
+            else
+            {
+                Console.Write("Enter Amount: ");
+                decimal transferAmount = decimal.Parse(Console.ReadLine());
+                Transfer newTransfer = new Transfer();
+                newTransfer.TransferTypeID = TransferType.Send;
+                newTransfer.TransferStatusID = TransferStatus.Approved;
+                newTransfer.AccountTo = recipientId;
+                newTransfer.Amount = transferAmount;
+                user.AddTransfer(newTransfer);
+                Console.WriteLine("Please hit enter to return to main menu");
+                return MenuOptionResult.WaitAfterMenuSelection;
+            }
+        
         }
 
         private MenuOptionResult RequestTEBucks()
