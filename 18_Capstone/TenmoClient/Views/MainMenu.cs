@@ -15,7 +15,7 @@ namespace TenmoClient.Views
         { 
             AddOption("View your current balance", ViewBalance)
                 .AddOption("View your past transfers", ViewTransfers)
-                .AddOption("View your pending requests", ViewRequests)
+                .AddOption("View Transfer Details", ViewRequests)
                 .AddOption("Send TE bucks", SendTEBucks)
                 .AddOption("Request TE bucks", RequestTEBucks)
                 .AddOption("Log in as different user", Logout)
@@ -50,11 +50,47 @@ namespace TenmoClient.Views
             return MenuOptionResult.WaitAfterMenuSelection;
         }
 
+
         private MenuOptionResult ViewRequests()
         {
-            Console.WriteLine("Not yet implemented!");
+            Console.Write("Please Enter Transfer ID: ");
+            int transferId = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("--------------------------------------------------");
+            Console.WriteLine("Transfer Details");
+            Console.WriteLine("--------------------------------------------------");
+
+            
+            //List<Transfer> transferDetails = user.ViewTransfersDetails(transferId);
+            
+            
+            Transfer details = user.ViewTransfersDetails(transferId);
+            Console.WriteLine($"ID: {details.TransferID}");
+            Console.WriteLine($"From: {details.AccountFromName}");
+            Console.WriteLine($"To: {details.AccountToName}");
+            Console.WriteLine($"Type: {details.TypeName}");
+            Console.WriteLine($"Status: {details.StatusName}");
+            Console.WriteLine($"Amount: {details.Amount}");
+            Console.WriteLine("Please hit enter to return to main menu");
+
             return MenuOptionResult.WaitAfterMenuSelection;
+
+
+            //Console.WriteLine("---------------------------------------------------");
+            //Console.Write("Select Transfer ID (0 to cancel): ");
+            //int recipientId = int.Parse(Console.ReadLine());
+            //if (recipientId == 0)
+            //{
+            //    Console.WriteLine("Please hit enter to return to main menu");
+            //    return MenuOptionResult.WaitAfterMenuSelection;
+
+            //}
+
+
+            //Console.WriteLine("Not yet implemented!");
+            //return MenuOptionResult.WaitAfterMenuSelection;
         }
+
 
         private MenuOptionResult SendTEBucks()
         {

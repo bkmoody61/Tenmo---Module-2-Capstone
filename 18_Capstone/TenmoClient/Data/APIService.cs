@@ -59,6 +59,14 @@ namespace TenmoClient.Data
 
             return response.Data;
         }
+        public Transfer ViewTransfersDetails(int transferId)
+        {
+            RestRequest request = new RestRequest($"{API_BASE_URL}transfer/{transferId}");
+            client.Authenticator = new JwtAuthenticator(UserService.GetToken());
+            IRestResponse<Transfer> response = client.Get<Transfer>(request);
+
+            return response.Data;
+        }
 
     }
 }

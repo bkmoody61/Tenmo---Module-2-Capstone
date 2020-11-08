@@ -7,6 +7,8 @@ namespace TenmoServer.DAO
     {
         bool TransferFunds(Transfer transfer);
         List<Transfer> ViewTransfer(int userId);
+        Transfer ViewTransferDetails(int transferId);
+
 
     }
 }
