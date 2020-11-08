@@ -43,7 +43,7 @@ namespace TenmoServer.Controllers
             return transferDAO.ViewTransfer(userId);
         }
 
-        [HttpGet("/transfer/{transferId}")]
+        [HttpGet("/transfer/detail/{transferId}")]
         public Transfer ViewTransferDetails(int transferId)
         {
             return transferDAO.ViewTransferDetails(transferId);
